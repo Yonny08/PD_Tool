@@ -1114,6 +1114,7 @@ namespace KKdMainLib
                     VL = value.Split(',');
                 value = "";
 
+                key.RawData = true;
                 int ds = keyType + 1;
                 length = valueListSize / ds;
                 key.Keys = new KFT3[length];
@@ -1235,7 +1236,7 @@ namespace KKdMainLib
                     W(str + ".raw_data.value_list_offset", key.RawDataValueListOffset);
                     keyType = 3;
                 }
-                else
+                else if (length > 0)
                 {
                     for (i = 0; i < length && keyType < 3; i++)
                     {
@@ -1247,17 +1248,34 @@ namespace KKdMainLib
                     }
 
                     s.W(str + ".raw_data.value_list=");
-                         if (keyType == 0) for (i = 0; i < length; i++)
-                            s.W(key.Keys[i].ToT0().ToString(false) + (i + 1 < length ? "," : ""));
-                    else if (keyType == 1) for (i = 0; i < length; i++)
-                            s.W(key.Keys[i].ToT1().ToString(false) + (i + 1 < length ? "," : ""));
-                    else if (keyType == 2) for (i = 0; i < length; i++)
-                            s.W(key.Keys[i].ToT2().ToString(false) + (i + 1 < length ? "," : ""));
-                    else if (keyType == 3) for (i = 0; i < length; i++)
-                            s.W(key.Keys[i]       .ToString(false) + (i + 1 < length ? "," : ""));
-                    s.P--;
+                    if (keyType == 0)
+                    {
+                        s.W(key.Keys[0].ToT0().ToString(false));
+                        for (i = 1; i < length; i++)
+                            s.W("," + key.Keys[i].ToT0().ToString(false));
+                    }
+                    else if (keyType == 1)
+                    {
+                        s.W(key.Keys[0].ToT1().ToString(false));
+                        for (i = 1; i < length; i++)
+                            s.W("," + key.Keys[i].ToT1().ToString(false));
+                    }
+                    else if (keyType == 2)
+                    {
+                        s.W(key.Keys[0].ToT2().ToString(false));
+                        for (i = 1; i < length; i++)
+                            s.W("," + key.Keys[i].ToT2().ToString(false));
+                    }
+                    else
+                    {
+                        s.W(key.Keys[0].ToString(false));
+                        for (i = 1; i < length; i++)
+                            s.W("," + key.Keys[i].ToString(false));
+                    }
                     s.W('\n');
                 }
+                else keyType = 0;
+
                 W(str + ".raw_data.value_list_size", length * keyType + length);
                 W(str + ".raw_data.value_type"     , "float"      );
                 W(str + ".raw_data_key_type"       , keyType      );
