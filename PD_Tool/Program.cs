@@ -18,8 +18,8 @@ namespace PD_Tool
         {
             SetProcessDPIAware();
 
-            Console. InputEncoding = System.Text.Encoding.Unicode;
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             Console.Title = "PD_Tool";
             if (args.Length == 0) { while (choose != "Q") MainMenu(); Exit(); }
