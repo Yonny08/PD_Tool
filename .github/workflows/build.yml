@@ -1,0 +1,27 @@
+name: Build PD_Tool
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore PD_Tool.sln
+
+      - name: Build
+        run: msbuild PD_Tool.sln /p:Configuration=Release
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PD_Tool_build
+          path: '**/bin/Release/**'
