@@ -27,4 +27,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: PD_Tool_build
-          path: '**/bin/Release/**'
+          path: |
+            **/bin/**/*.exe
+            **/bin/**/*.dll
+          if-no-files-found: warn
