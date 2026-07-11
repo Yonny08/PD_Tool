@@ -28,6 +28,5 @@ jobs:
         with:
           name: PD_Tool_build
           path: |
-            **/bin/**/*.exe
-            **/bin/**/*.dll
+            **/build/**
           if-no-files-found: warn
