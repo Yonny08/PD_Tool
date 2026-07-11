@@ -21,7 +21,7 @@ jobs:
         run: nuget restore PD_Tool.sln
 
       - name: Build
-        run: msbuild PD_Tool.sln /p:Configuration=Release
+        run: msbuild PD_Tool/PD_Tool.csproj /p:Configuration=Release
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
